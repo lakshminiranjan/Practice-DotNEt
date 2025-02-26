@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 
 class Program
 {
+         //int
     public void SecHighest()
     {
         int max1, max2;
-        int[] a = {78,75,14,84,56,94};
+        int[] a = {1,2,3,4};
         if(a[0] > a[1])
         {
             max1 = a[0];
@@ -28,11 +29,14 @@ class Program
                 max2 = a[i];
             }
         }
+        // return max2;
         Console.WriteLine(max2.ToString());
     }
     static void Main(string[] args)
     {
         Program obj = new Program();
         obj.SecHighest();
+        // int i = obj.SecHighest();
+        // Console.WriteLine(i.ToString());
     }
 }
