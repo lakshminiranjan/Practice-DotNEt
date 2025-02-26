@@ -1,4 +1,4 @@
-﻿/******************************************************************************
+/******************************************************************************
 
                             Online C# Compiler.
                 Code, Compile, Run and Debug C# program online.
@@ -31,6 +31,8 @@ class HelloWorld {
             return 0;
         else if(n == 2)
             return 1;
+
+        Console.WriteLine(a + "\n" + b);
         for(int i= 2;i <= n; i++)
         {
             int c = a+b;
