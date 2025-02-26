@@ -1,0 +1,15 @@
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\obj\Debug\net9.0\SecondHighest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\obj\Debug\net9.0\SecondHighest.AssemblyInfoInputs.cache
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\obj\Debug\net9.0\SecondHighest.AssemblyInfo.cs
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\obj\Debug\net9.0\SecondHighest.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\obj\Debug\net9.0\SecondHighest.sourcelink.json
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\bin\Debug\net9.0\SecondHighest.exe
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\bin\Debug\net9.0\SecondHighest.deps.json
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\bin\Debug\net9.0\SecondHighest.runtimeconfig.json
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\bin\Debug\net9.0\SecondHighest.dll
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\bin\Debug\net9.0\SecondHighest.pdb
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\obj\Debug\net9.0\SecondHighest.dll
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\obj\Debug\net9.0\refint\SecondHighest.dll
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\obj\Debug\net9.0\SecondHighest.pdb
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\obj\Debug\net9.0\SecondHighest.genruntimeconfig.cache
+C:\Users\DELL\Desktop\C#Problems\SecondHighest\obj\Debug\net9.0\ref\SecondHighest.dll

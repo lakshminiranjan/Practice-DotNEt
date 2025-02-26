@@ -1,0 +1,15 @@
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\obj\Debug\net9.0\Fibinocci.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\obj\Debug\net9.0\Fibinocci.AssemblyInfoInputs.cache
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\obj\Debug\net9.0\Fibinocci.AssemblyInfo.cs
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\obj\Debug\net9.0\Fibinocci.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\obj\Debug\net9.0\Fibinocci.sourcelink.json
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\bin\Debug\net9.0\Fibinocci.exe
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\bin\Debug\net9.0\Fibinocci.deps.json
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\bin\Debug\net9.0\Fibinocci.runtimeconfig.json
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\bin\Debug\net9.0\Fibinocci.dll
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\bin\Debug\net9.0\Fibinocci.pdb
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\obj\Debug\net9.0\Fibinocci.dll
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\obj\Debug\net9.0\refint\Fibinocci.dll
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\obj\Debug\net9.0\Fibinocci.pdb
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\obj\Debug\net9.0\Fibinocci.genruntimeconfig.cache
+C:\Users\DELL\Desktop\C#Problems\Fibinocci\obj\Debug\net9.0\ref\Fibinocci.dll
