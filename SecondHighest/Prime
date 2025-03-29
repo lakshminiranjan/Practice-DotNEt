@@ -1,0 +1,30 @@
+// Online C# Editor for free
+// Write, Edit and Run your C# code using C# Online Compiler
+
+using System;
+
+public class HelloWorld
+{
+    public void Prime(int x){
+        int divisors = 0;
+        bool isPrime = false;
+        for(int i=1;i<=x;i++){
+            if(x % i == 0)
+                divisors++;
+        }
+        if(divisors == 2){
+            isPrime = true;
+            Console.WriteLine(x + " is Prime.");
+        }
+        else{
+            isPrime = false;
+            Console.WriteLine(x + " is not Prime.");
+        }
+        
+    }
+    public static void Main(string[] args)
+    {
+        HelloWorld obj = new HelloWorld();
+        obj.Prime(4);
+    }
+}
