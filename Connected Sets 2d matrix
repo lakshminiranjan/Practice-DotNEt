@@ -1,0 +1,30 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int t = int.Parse(Console.ReadLine());
+        while (t--> 0)
+        {
+            int n = int.Parse(Console.ReadLine()), cc = 0;
+            int[,] matrix = new int[n, n];
+            for (int i = 0; i < n; i++)
+            {
+                var row = Console.ReadLine().Split();
+                for (int j = 0; j < n; j++) matrix[i, j] = int.Parse(row[j]);
+            }
+            void DFS(int x, int y)
+            {
+                if (x < 0 || y < 0 || x >= n || y >= n || matrix[x, y] == 0) return;
+                matrix[x, y] = 0;
+                foreach (var (dx, dy) in new[] { (-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1) })
+                    DFS(x + dx, y + dy);
+            }
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < n; j++)
+                    if (matrix[i, j] == 1) { DFS(i, j); cc++; }
+            Console.WriteLine(cc);
+        }
+    }
+}
