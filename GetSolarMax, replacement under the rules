@@ -1,0 +1,22 @@
+using System;
+
+class Program
+{
+    static int getMaxSolar(string bulbs)
+    {
+        int count = 0;
+        foreach (char c in bulbs) if (c == '1') count++;
+
+        for (int i = 0; i < bulbs.Length; i++)
+            if (bulbs[i] == '0' && (i == 0 || bulbs[i - 1] != '1') && (i == bulbs.Length - 1 || bulbs[i + 1] != '1'))
+                count++;
+
+        return count;
+    }
+
+    static void Main()
+    {
+        string bulbs = Console.ReadLine();
+        Console.WriteLine(getMaxSolar(bulbs));
+    }
+}
