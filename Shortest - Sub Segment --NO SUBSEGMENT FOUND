@@ -1,0 +1,31 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        string text = Console.ReadLine();
+        string[] words = text.Split(new[] { ' ', '.', ',', '!', '?', ';', ':', '-', '_', '(', ')' }, StringSplitOptions.RemoveEmptyEntries);
+        var keys = new HashSet<string>(Enumerable.Range(0, int.Parse(Console.ReadLine())).Select(_ => Console.ReadLine().ToLower()));
+        var map = new Dictionary<string, int>(); int left = 0, start = -1, found = 0, minLen = int.MaxValue;
+
+        for (int right = 0; right < words.Length; right++)
+        {
+            string word = words[right].ToLower();
+            if (keys.Contains(word)) map[word] = map.GetValueOrDefault(word, 0) + 1;
+            if (keys.Contains(word) && map[word] == 1) found++;
+
+            while (found == keys.Count)
+            {
+                if (right - left + 1 < minLen) { minLen = right - left + 1; start = left; }
+                if (keys.Contains(words[left].ToLower()) && map[words[left].ToLower()] == 1) found--;
+                if (keys.Contains(words[left].ToLower())) map[words[left].ToLower()]--;
+                left++;
+            }
+        }
+
+        Console.WriteLine(start == -1 ? "NO SUBSEGMENT FOUND" : string.Join(" ", words.Skip(start).Take(minLen)));
+    }
+}
