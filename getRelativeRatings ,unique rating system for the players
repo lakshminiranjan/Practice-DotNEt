@@ -1,0 +1,51 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static long[] getRelativeRatings(int[] skill, int[] rating, int k)
+    {
+        int n = skill.Length;
+        long[] result = new long[n];
+        var players = new List<(int skill, int rating, int index)>();
+        for (int i = 0; i < n; i++) players.Add((skill[i], rating[i], i));
+        players.Sort((a, b) => a.skill.CompareTo(b.skill)); // Sort by skill
+
+        var topRatings = new SortedSet<(int rating, int index)>(Comparer<(int rating, int index)>.Create((a, b) =>
+            a.rating != b.rating ? b.rating.CompareTo(a.rating) : a.index.CompareTo(b.index))); // Max heap-like
+
+        long totalTopRatings = 0;
+        foreach (var (s, r, i) in players)
+        {
+            result[i] = totalTopRatings; // Store the current top sum in result
+            topRatings.Add((r, i));
+            totalTopRatings += r;
+
+            // Maintain the top `k` ratings
+            if (topRatings.Count > k)
+            {
+                var lowest = topRatings.Max;
+                topRatings.Remove(lowest);
+                totalTopRatings -= lowest.rating;
+            }
+        }
+        return result;
+    }
+
+    static void Main()
+    {
+        // Read number of players and the value of k
+        int n = int.Parse(Console.ReadLine());
+        int k = int.Parse(Console.ReadLine());
+
+        // Read skill levels
+        int[] skill = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        // Read ratings
+        int[] rating = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        // Calculate and print relative ratings
+        long[] relativeRatings = getRelativeRatings(skill, rating, k);
+        Console.WriteLine(string.Join(" ", relativeRatings));
+    }
+}
