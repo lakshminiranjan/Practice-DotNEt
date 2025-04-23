@@ -28,3 +28,22 @@ class Program
         }
     }
 }
+
+
+
+/*
+Depth First Search (DFS): The DFS function explores the matrix recursively in all 8 directions for each cell with a value of 1, marking visited cells as 0.
+O(T × N²): For each test case (T), the matrix traversal requires N × N checks. The DFS visits each cell once. ---> Time Complexity
+
+
+Space Complexity:
+- O(N²): Space is required to store the matrix.
+- O(N) (Call Stack): In the worst case, recursion depth is proportional to the matrix size (for a single connected component).
+
+
+
+
+
+
+
+*/
