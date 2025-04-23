@@ -1,0 +1,49 @@
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        var input = Console.ReadLine().Split();
+        int n = int.Parse(input[0]), m = int.Parse(input[1]), x = int.Parse(input[2]), y = int.Parse(input[3]);
+        var picture = new int[m];
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < m; j++)
+                picture[j] += Console.ReadLine()[j] == '#' ? 1 : 0;
+
+        int[,] dp = new int[2, m + 1]; // 0 = white, 1 = black
+        for (int i = 1; i <= m; i++)
+        {
+            dp[0, i] = dp[1, i] = int.MaxValue;
+            for (int k = x; k <= y && i - k >= 0; k++)
+            {
+                dp[0, i] = Math.Min(dp[0, i], dp[1, i - k] + n * k - picture.Skip(i - k).Take(k).Sum());
+                dp[1, i] = Math.Min(dp[1, i], dp[0, i - k] + picture.Skip(i - k).Take(k).Sum());
+            }
+        }
+        Console.WriteLine(Math.Min(dp[0, m], dp[1, m]));
+    }
+}
+
+/*
+Algorithm used :
+Column Color Counts: 
+Dynamic Programming (DP):
+Result:
+- Time Complexity:- O(m × y): For each column, iterate over all group sizes from x to y.
+- O(m × n): To calculate sums for columns.
+Total: O(n × m + m × y).
+
+- Space Complexity:- O(2 × m): For the dp table.
+Total: O(m).
+
+
+
+
+
+
+
+
+
+*/
