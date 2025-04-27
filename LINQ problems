@@ -1,0 +1,129 @@
+// Online C# Editor for free
+// Write, Edit and Run your C# code using C# Online Compiler
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class Order
+{
+    public void DistinctNumbers(){
+        //distinct numbers in a List
+        var NumList = new List<int>() {1,2,2,3,4,4};
+        var distinctNum = NumList.Distinct().ToList();
+        foreach(var v in distinctNum){
+            Console.WriteLine(v);
+        }
+    }
+    
+    public void Filtering(){
+        var NumList1 = new List<int>() {1, 2, 3, 4, 5, 6, 7, 8 };
+        var even = NumList1.Where(x => x % 2 == 0);
+        var odd = NumList1.Where(x => x % 2 != 0);
+        
+        Console.WriteLine("Even Numbers Are:");
+        foreach(var e in even){
+            Console.WriteLine(e);
+        }
+        Console.WriteLine("Odd Numbers Are:");
+        foreach(var o in odd){
+            Console.WriteLine(o);
+        }
+    }
+    
+    public void Sorting(){
+        var SortingList = new List<int> () {25,88,89,44,26,64};
+        var numAsc =  SortingList.OrderBy(x => x);
+        var numDes = SortingList.OrderByDescending(x => x);
+        Console.WriteLine("Ascending Order:");
+        foreach(var e in numAsc){
+            Console.WriteLine(e);
+        }
+        Console.WriteLine("Descending Order:");
+        foreach(var o in numDes){
+            Console.WriteLine(o);
+        }
+    }
+    
+    public void FirstorDefault(){
+        var listNum = new List<int>() {1,2,3,4};
+        var first = listNum.First();
+        var listEmpty = new List<int>() { };
+        var firstempty = listEmpty.FirstOrDefault();//LastOrDefault for Last Element
+        Console.WriteLine(first + " \n" + firstempty);
+    }
+    
+    public void Anyword(){
+       var firstList = new List<int>() {1,2,3,4}; 
+       var secondList = new List<int>() {3,5,7};
+       //any -if any one condition satisfies true else false
+       //all- if any one condition fails false else true
+       var Checkeven1 = firstList.Any(x => x % 2 == 0);
+       var Checkeven2 = secondList.Any(x => x % 2 == 0);
+       Console.WriteLine(Checkeven1 + " \n" + Checkeven2);
+    }
+    
+    public void SkipandTake(){
+        var listNum = new List<int>() {1,2,3,4,5,6,7,8};
+        var firstThree = listNum.Take(3);
+        Console.WriteLine("First three elements in list are:");
+        foreach(int i in firstThree){
+            Console.WriteLine(i);
+        }
+        var skipFirstTwo = listNum.Skip(2);
+        Console.WriteLine("Result after kipping first two num:");
+        foreach(int i in skipFirstTwo){
+            Console.WriteLine(i);
+        }
+    }
+    
+    public void Zip(){
+        var numbers = new List<int>() {1,2,3};
+        var letters = new List<char>() {'a','b','c'};
+        //zip merges elements at the corresponding position
+        var result = numbers.Zip(letters,(num,letter)=>$"{num}-{letter}");
+        foreach(var v in result){
+            Console.WriteLine(v);
+        }
+    }
+    
+    public void AggregateFun(){
+        var numbers = new List<int>() {1,2,3,4,5,6,7,8};
+        
+        var SumAll = numbers.Aggregate((accum,num) => accum + num);
+        Console.WriteLine(SumAll);
+    }
+    
+    //Select Manual
+        public int Id { get ; set; }
+        
+        public List<string> Product { get ; set; }
+    
+}
+
+public class Program{
+    public static void Main(string[] args)
+    {
+        Order obj = new Order();
+        //obj.DistinctNumbers();
+        //obj.Filtering();
+        //obj.Sorting();
+        //obj.FirstorDefault();
+        //obj.Anyword();
+        //obj.SkipandTake();
+        //obj.Zip();
+        //obj.AggregateFun();
+        var orders = new List<Order>()
+        {
+            new Order(){Id =1 , Product = new List<string>{"Product A", "Product B"}},
+            new Order(){Id =2 , Product = new List<string>{"Product C", "Product B"}},
+        };
+        var AllProducts = orders.SelectMany(order => order.Product.Select(product => $"Id : {order.Id} , Product : {product}"));
+            Console.WriteLine("All products with Ids are : ");
+            foreach(var v in AllProducts){
+                Console.WriteLine(v);
+            }
+            
+    }
+}
+            
