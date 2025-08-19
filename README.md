@@ -1,3 +1,8 @@
+var filesToStore = files.Skip(Math.Max(0, files.Count - 3)).ToList();
+
+
+
+
 # Practice-DotNEt
 
 
