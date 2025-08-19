@@ -405,3 +405,157 @@ Here's a **comprehensive list of LINQ built-in methods** in C#, including both t
 
 
 
+
+A single file uploader is there in asp. Net mvc application,  here instead of single file upload I need to have 3 file uploads and after 3 uploads if any other file uploaded last file should go and the uploaded 4th file should the 3rd file now. Code is uploaded in images. Can we achieve the requirement only changing in html and javascript, if yes give that code if no do minimal changes in c Sharp code and all please
+
+You want to allow uploading up to three files in your ASP.NET MVC application, replacing the oldest file each time a fourth file is added (a “rolling” 3-file uploader). You’d like to know if this can be achieved just with HTML and JavaScript, and if not, what minimal C# changes are needed.
+
+## Can it be done with only HTML and JavaScript?
+
+**No, not fully.**  
+While you can use HTML and JS to let users select and queue files on the client, in a standard HTML `<input type="file" multiple>`, the actual uploading and backend management (such as storing only three files per record, evicting the oldest, etc.) requires backend logic in C#.
+
+However, you can make most UI/UX changes on the front end, and only minimal changes are required on the server.
+
+***
+
+## Solution Overview
+
+### 1. Front-End (HTML & JavaScript)
+- Show a file input that allows only one file per selection, a display area showing the list of up to three uploaded files.
+- Keep a JS array to manage the current “queue.”
+- When a file is uploaded, add it to the array. If more than three, remove (and optionally delete) the first/oldest.
+- POST files to the server one at a time or all together.
+
+### 2. Back-End (C# Controller/Model)
+- Accept a list/array of files (`IFormFile[]` or similar).
+- Store, and if there are more than three, remove the oldest per your logic.
+
+***
+
+## HTML & JavaScript (Client-Side)
+
+```html
+<div id="uploadedFilesList"></div>
+<div class="input-group mb-2">
+    <!-- No 'multiple'! Enforce 1 file at a time -->
+    <input type="file" id="fileInput" accept="application/pdf" style="display: none;" onchange="handleFileSelect(this)" />
+    <label class="btn btn-outline-secondary mb-0" for="fileInput">Browse</label>
+</div>
+<button type="button" id="uploadBtn" class="g-btn" onclick="uploadFile()" disabled>Upload</button>
+
+<script>
+    let uploadedFiles = [];
+
+    function handleFileSelect(input) {
+        const file = input.files[0];
+        if (!file || file.type !== "application/pdf") {
+            alert("Select a PDF file!");
+            input.value = '';
+            document.getElementById('uploadBtn').disabled = true;
+            return;
+        }
+        document.getElementById('uploadBtn').disabled = false;
+    }
+
+    function uploadFile() {
+        const input = document.getElementById('fileInput');
+        const file = input.files;
+        if (!file) return;
+
+        if (uploadedFiles.length === 3) {
+            // Remove oldest (first) file
+            uploadedFiles.shift();
+        }
+        uploadedFiles.push(file);
+        updateUploadedFilesList();
+
+        // Optionally, upload immediately:
+        // uploadToServer(uploadedFiles);
+
+        input.value = '';
+        document.getElementById('uploadBtn').disabled = true;
+    }
+
+    function updateUploadedFilesList() {
+        const list = document.getElementById('uploadedFilesList');
+        list.innerHTML = "";
+        uploadedFiles.forEach((f, idx) => {
+            const div = document.createElement('div');
+            div.innerText = (idx+1) + ". " + f.name;
+            list.appendChild(div);
+        });
+    }
+
+    // Optional: Function to upload to server
+    function uploadToServer(files) {
+        let formData = new FormData();
+        files.forEach(f => formData.append('files', f)); // 'files' is array
+
+        fetch('/Your/Upload/Endpoint', {
+            method: 'POST',
+            body: formData
+        }).then(r => {
+            // handle result
+        });
+    }
+</script>
+```
+
+***
+
+## Minimal Server-Side (C#) Changes
+
+**On the backend**, ensure that your upload endpoint (`Upload` action) can accept an array of files (up to three). If you send all three at once, change the signature to:
+
+```csharp
+[HttpPost]
+public ActionResult Upload(List<HttpPostedFileBase> files, int answerSetId)
+{
+    // Only keep latest 3 files (if more sent, take last 3)
+    var filesToStore = files.TakeLast(3).ToList();
+
+    // Save files. You'll need to store them with info to know their order.
+    foreach (var file in filesToStore)
+    {
+        if (file != null && file.ContentLength > 0)
+        {
+            // Save file - your logic here
+        }
+    }
+
+    // Remove old files if necessary
+    // Respond with a success indication
+    return Json(new { success = true });
+}
+```
+
+### If you want “Upload Each File Immediately”  
+Process each file as it comes in, and keep track of the number and the order in your DB/model; delete the oldest when a new one is added and there are already three.
+
+***
+
+### Summary Table
+
+| Front-End | Back-End (C#) |
+|-----------|---------------|
+| Limit selection & display, restrict to 3, rolling. | Accept array of files, keep latest 3, delete oldest. |
+| JS manages queue UI. | Remove old files in storage/database. |
+
+***
+
+**In conclusion:**  
+- Most user interaction and logic can be handled with JS and some HTML.
+- Minimal backend changes are needed: accept list of files and enforce “max 3, rolling” logic during storage.  
+- If you're storing file metadata in the model, add a collection/list of files and manage their addition/removal accordingly.
+
+Let me know if you want the full C# controller code with the above scenario, or any further integration advice!
+
+Citations:
+[1] T-3001-Test.txt https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/12938409/1d18966f-1083-4acb-ba2f-0066cedefb23/T-3001-Test.txt
+[2] selected_image_3182816908821823823.jpg https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/images/12938409/a21ffc3e-e8e3-4b4e-9d64-0068ce18bd41/selected_image_3182816908821823823.jpg?AWSAccessKeyId=ASIA2F3EMEYE7LXCZXA6&Signature=G%2FLFUl1qUO6%2FNoPdwVBE7KIcGOQ%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEHUaCXVzLWVhc3QtMSJHMEUCID410YWNKfRWnZ0XO2IxnAxYGILydWCH1b6%2Fzn72msY7AiEA8ELm7ijGolmWBGP55yLDtuTaL2G8J3k%2BPZAesNt7Frwq%2BgQIvv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw2OTk3NTMzMDk3MDUiDIJV7rfLdCWLNUxa%2FirOBH7rlZOSAEujOFAHVlLbC62B4UwtZtjTwEFmNH7QSeJ08ryfwpOCOVAOncl5wBOT70kouzmr7L03c8YKCQZg20w1uK0FRqVvqu%2FsBODj2ILk%2BatFOL2gyUCutKm2PsTbkaer3KU5R6f2bpsK3ICFVCm4dPKchAAaxozHXBpl7OyT%2Bfu4pjMAISUirdCdn%2BrGWSC%2FVEyj7zyH%2FbQT7kUcLz1%2BnxjKM2cIV5vHLMqkuVW04ConuXhCXOsQJ3dC6v5wpo6nxBz0lecUYwpJSd4QCFMpqhCWNEyhLzLTqqW%2FOspoZdHXb98eOelCwe7nh%2BMno8FCbgaeGYArdCuy9qEKM9%2FiGY8qkhZzonUIfI2W7%2BmmEEWAU%2BPT6yDVONMhERsEr1m9wEpJ2YoNdNyP6FbtPr8fxucGG5xXEgdwwGe2N3%2FaEFSWUTj89hfclpBj6i%2BPO8uULJ3ekUW17eGF5yXNYib1CsJ1ks38L5qwGvmTM9FLrZ59sKnpBL181NG4bab8ueARhPVWuKkSAsrV8OU9LOcRBpEw9PU%2FajLp4GStaPuVgih6ZSFhXILUNf7vV%2BCRHBCE0ayIF1jr13M3R40h7YYFPCi1lt5tOTvxaIeq43ZNAdJsL9nggbQcuHCpWC0UPpBsxEcVRspAYfeKcKj6ZGyPbrIjFZXwuSiR%2B3UDJK8dcLNQ1ONcJyAeeCu0DQsbUzKKRZqNbTFmSL0sRfPxCU84nv1OX5H4CFe9MJZgvNqMUyqvb2Hdga03G4Aq0qKVP4HpD9YY80frq0VC6zUIMK%2FhkcUGOpoBevYsUV8hFmFrnWCsib0o0q6a%2Bbj0R0R0EKUpxEq6gW1b2hyJ1lfOkhZAskeQpwEDMN3RONtwmyueL8dQAR6%2BD2KwTWsPP%2FqXGUB%2BhATQzqz4SxSWNFU56QXHafBWJhE%2BeZKjQB3QB5vb5KcuYiPR3obkzfgo7liJGjG%2F3rR5DYgLAvBLTV17Yu3a127wC9c56hOZL8e6zcLiwA%3D%3D&Expires=1755608656
+
+
+
+
+
